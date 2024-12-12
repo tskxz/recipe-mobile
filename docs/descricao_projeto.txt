@@ -1,0 +1,60 @@
+O projeto vai ser baseado numa aplicação móvel em que as pessoas podem ver as receitas disponíveis.
+
+Os utilizadores também podem criar as suas próprias receitas.
+Quando os utilizadores criam as suas próprias receitas, só os próprio utilizador que criou a receita consegue ver, eles podem ter a opção de publicar para o público e assim qualquer utilizador pode pesquisar e ver a receita.
+
+Cada receita tem nome, descrição, tempo, dificuldade, número de pessoas, preparação (passos) e ingredientes.
+
+Cada receita, deve se adicionar os ingredientes, cada ingrediente tem nome e quantidade (texto).
+
+Cada receita tem a preparação, na preparação, pode se adicionar vários passos. Cada passo é uma descrição.
+
+Exemplo
+
+==== Receita Bacalhau com crumble de broa ====
+descrição - Celebre o Natal com uma receita clássica: bacalhau com crumble de broa, acompanhado de batata-doce e espinafres. Uma combinação de sabores tradicionais com uma pitada de inovação.
+
+tempo - 45 min
+
+dificuldade - Fácil
+
+número de pessoas - 4 pessoas
+
+==== Ingredientes ====
+Ingredientes
+bacalhau de 1ª da Noruega - 4 g 1(1.32 Kg)
+azeite virgem extra - 200 ml + 2 c. de sopa
+alho - 8 dente
+louro - 1 folha
+pimenta - 1 q.b.
+batata-doce laranja - 500 g
+sal - 1 c. de sopa
+manteiga - 1 c. de sopa
+espinafres - 2 emb. (340 g)
+broa - 400 g
+coentros frescos - 1⁄2 molho
+
+==== Preparação ==== 
+Passo 1
+Pré-aqueça o forno a 180 ºC.
+
+Passo 2
+Coloque os lombos num tabuleiro de forno. Regue com os 200ml de azeite, junte seis dentes de alho esmagados, o louro e polvilhe com a pimenta.
+
+Passo 3
+Leve ao forno por cerca de 20 minutos.
+
+Passo 4
+Enquanto isso descasque a batata-doce, corte aos cubos e leve a cozer num tacho com água e uma colher de sopa de sal. Coza até a batata estar mole. Em seguida escorra, adicione a manteiga e triture com uma varinha mágica até obter um puré.
+
+Passo 5
+Numa frigideira, salteie os espinafres com um dente de alho picado e uma colher de sopa de azeite.
+
+Passo 6
+Num robot de cozinha, coloque o miolo da broa, o restante alho, meia colher de sopa de azeite e os coentros. Triture até obter uma areia grossa.
+
+Passo 7
+Num robot de cozinha, coloque o miolo da broa, o restante alho, meia colher de sopa de azeite e os coentros. Triture até obter uma areia grossa.
+
+Passo 8
+Finalize com o crumble de broa e regue com o restante azeite.
