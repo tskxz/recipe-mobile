@@ -6,6 +6,7 @@ import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { IconSymbol } from '@/components/ui/IconSymbol';
+import { HelloWave } from '@/components/HelloWave';
 
 const minhas_receitas = [
   {
@@ -28,41 +29,52 @@ export default function MinhasReceitasScreen() {
     </View>
   );
 
+  const renderHeader = () => (
+    <ThemedView style={styles.header}>
+      
+      <ThemedText type="title">As minhas receitas</ThemedText>
+      <HelloWave />
+      <Text style={styles.subtitle}>
+        Aqui aparece as tuas receitas, podes adicionar a tua própria receita e publicar!
+      </Text>
+    </ThemedView>
+  );
+
   return (
-    <ParallaxScrollView>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">As minhas receitas</ThemedText>
-      </ThemedView>
-      <ThemedText>Aqui aparece as tuas receitas, podes adicionar a tua própria receita e publicar!</ThemedText>
-      <FlatList
+    <FlatList
       data={minhas_receitas}
       keyExtractor={(item) => item.id}
       renderItem={renderCard}
-      contentContainerStyle={styles.cardList}
+      ListHeaderComponent={renderHeader}
+      contentContainerStyle={styles.container}
     />
-    </ParallaxScrollView>
   );
 }
 
+
 const styles = StyleSheet.create({
-  titleContainer: {
-    padding: 20,
+  header: {
     alignItems: 'center',
+    padding: 50,
+    marginBottom: 20,
   },
-  stepContainer: {
-    padding: 20,
+  subtitle: {
+    fontSize: 14,
+    color: '#666',
+    textAlign: 'center',
+    marginTop: 10,
   },
-  cardList: {
+  container: {
     paddingHorizontal: 16,
-    paddingTop: 16,
+    paddingBottom: 16,
   },
   card: {
     backgroundColor: '#fff',
     borderRadius: 10,
     overflow: 'hidden',
     marginBottom: 16,
-    elevation: 3, // Para sombra no Android
-    shadowColor: '#000', // Para sombra no iOS
+    elevation: 3,
+    shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
