@@ -1,16 +1,13 @@
-import { StyleSheet, View, Text, Image, FlatList } from 'react-native';
+import { StyleSheet, Image, Platform, View, Text, FlatList } from 'react-native';
 
-import { HelloWave } from '@/components/HelloWave';
+import { Collapsible } from '@/components/Collapsible';
+import { ExternalLink } from '@/components/ExternalLink';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
+import { IconSymbol } from '@/components/ui/IconSymbol';
 
-const recipes = [
-  {
-    id: '1',
-    title: 'Bolo de Chocolate',
-    image: 'https://pt.petitchef.com/imgupl/recipe/bolo-de-chocolate-humido-e-fofinho--454177p704082.jpg'
-  },
+const minhas_receitas = [
   {
     id: '2',
     title: 'Salada Fresca',
@@ -23,8 +20,7 @@ const recipes = [
   },
 ];
 
-export default function HomeScreen() {
-
+export default function MinhasReceitasScreen() {
   const renderCard = ({ item }) => (
     <View style={styles.card}>
       <Image source={{ uri: item.image }} style={styles.cardImage} />
@@ -34,20 +30,17 @@ export default function HomeScreen() {
 
   return (
     <ParallaxScrollView>
-    <ThemedView style={styles.titleContainer}>
-      <ThemedText type="title">Receitas</ThemedText>
-      <HelloWave />
-    </ThemedView>
-    <ThemedView style={styles.stepContainer}>
-      <ThemedText>Vê todas as receitas aqui</ThemedText>
-    </ThemedView>
-    <FlatList
-      data={recipes}
+      <ThemedView style={styles.titleContainer}>
+        <ThemedText type="title">As minhas receitas</ThemedText>
+      </ThemedView>
+      <ThemedText>Aqui aparece as tuas receitas, podes adicionar a tua própria receita e publicar!</ThemedText>
+      <FlatList
+      data={minhas_receitas}
       keyExtractor={(item) => item.id}
       renderItem={renderCard}
       contentContainerStyle={styles.cardList}
     />
-  </ParallaxScrollView>
+    </ParallaxScrollView>
   );
 }
 
@@ -85,3 +78,4 @@ const styles = StyleSheet.create({
     color: '#333',
   },
 });
+
