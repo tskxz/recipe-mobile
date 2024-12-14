@@ -32,44 +32,51 @@ export default function HomeScreen() {
     </View>
   );
 
-  return (
-    <ParallaxScrollView>
-    <ThemedView style={styles.titleContainer}>
+  const renderHeader = () => (
+    <ThemedView style={styles.header}>
+      
       <ThemedText type="title">Receitas</ThemedText>
       <HelloWave />
+      <Text style={styles.subtitle}>
+        Ve e pesquisa todas as receitas!
+      </Text>
     </ThemedView>
-    <ThemedView style={styles.stepContainer}>
-      <ThemedText>Vê todas as receitas aqui</ThemedText>
-    </ThemedView>
+  );
+
+  return (
     <FlatList
       data={recipes}
       keyExtractor={(item) => item.id}
       renderItem={renderCard}
-      contentContainerStyle={styles.cardList}
+      ListHeaderComponent={renderHeader}
+      contentContainerStyle={styles.container}
     />
-  </ParallaxScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  titleContainer: {
-    padding: 20,
+  header: {
     alignItems: 'center',
+    padding: 50,
+    marginBottom: 20,
   },
-  stepContainer: {
-    padding: 20,
+  subtitle: {
+    fontSize: 14,
+    color: '#666',
+    textAlign: 'center',
+    marginTop: 10,
   },
-  cardList: {
+  container: {
     paddingHorizontal: 16,
-    paddingTop: 16,
+    paddingBottom: 16,
   },
   card: {
     backgroundColor: '#fff',
     borderRadius: 10,
     overflow: 'hidden',
     marginBottom: 16,
-    elevation: 3, // Para sombra no Android
-    shadowColor: '#000', // Para sombra no iOS
+    elevation: 3,
+    shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
