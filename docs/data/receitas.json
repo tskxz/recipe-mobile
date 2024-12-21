@@ -1,0 +1,20 @@
+{
+    "_id": ObjectId("..."),
+    "name": "Bacalhau com crumble de broa",
+    "description": "Celebre o Natal com uma receita clássica...",
+    "time": "45 min",
+    "difficulty": "Fácil",
+    "num_people": 4,
+    "visibility": "public",
+    "user_id": ObjectId("..."),
+    "ingredients": [
+        { "name": "bacalhau de 1ª da Noruega", "quantity": "4 g 1(1.32 Kg)" },
+        { "name": "azeite virgem extra", "quantity": "200 ml + 2 c. de sopa" },
+        { "name": "alho", "quantity": "8 dentes" }
+    ],
+    "steps": [
+        { "order": 1, "description": "Pré-aqueça o forno a 180 ºC." },
+        { "order": 2, "description": "Coloque os lombos num tabuleiro de forno..." },
+        { "order": 3, "description": "Leve ao forno por cerca de 20 minutos." }
+    ]
+}
