@@ -16,8 +16,8 @@ app.get('/api/recipes', (req, res) => {
 })
 
 app.get("/api/recipes/:id", (req, res) => {
-    const recipes = recipes.find(e => e._id === req.params.id);
-    res.json(recipes)
+    const recipe = recipes.find(e => e._id === req.params.id);
+    res.json(recipe)
 })
 
 app.listen(port, () => {
