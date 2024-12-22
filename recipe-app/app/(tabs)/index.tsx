@@ -1,30 +1,32 @@
 import { StyleSheet, View, Text, Image, FlatList } from 'react-native';
-
+import React, {useEffect, useState} from 'react';
 import { HelloWave } from '@/components/HelloWave';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 
-const recipes = [
-  {
-    id: '1',
-    title: 'Bolo de Chocolate',
-    image: 'https://pt.petitchef.com/imgupl/recipe/bolo-de-chocolate-humido-e-fofinho--454177p704082.jpg'
-  },
-  {
-    id: '2',
-    title: 'Salada Fresca',
-    image: 'https://cdn.recipes.lidl/images/pt-PT/Salada-fresca-de-verao.jpg',
-  },
-  {
-    id: '3',
-    title: 'Sopa de Legumes',
-    image: 'https://assets.unileversolutions.com/recipes-v2/36850.jpg',
-  },
-];
-
 export default function HomeScreen() {
-
+  const [recipes, setRecipes] = useState([]); 
+  const [loading, setLoading] = useState(true);
+  
+  useEffect(() => {
+    const fetchRecipes = async () => {
+      try {
+        const API_URL = "http://192.168.1.135:3000/api/recipes"
+        const response = await fetch(API_URL);
+        const data = await response.json();
+        console.log('Receitas carregadas: ', data)
+        setRecipes(data);
+        
+      } catch (error) {
+        console.error('Erro ao buscar receitas:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+  
+    fetchRecipes();
+  }, []);
   const renderCard = ({ item }) => (
     <View style={styles.card}>
       <Image source={{ uri: item.image }} style={styles.cardImage} />
@@ -35,7 +37,7 @@ export default function HomeScreen() {
   const renderHeader = () => (
     <ThemedView style={styles.header}>
       
-      <ThemedText type="title">Receitas</ThemedText>
+      <ThemedText type="title">Receitas Teste</ThemedText>
       <HelloWave />
       <Text style={styles.subtitle}>
         Ve e pesquisa todas as receitas!
@@ -43,10 +45,18 @@ export default function HomeScreen() {
     </ThemedView>
   );
 
+  if(loading){
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <Text>Carregando receitas...</Text>
+      </View>
+    );
+  }
+
   return (
     <FlatList
       data={recipes}
-      keyExtractor={(item) => item.id}
+      keyExtractor={(item) => item._id}
       renderItem={renderCard}
       ListHeaderComponent={renderHeader}
       contentContainerStyle={styles.container}
@@ -57,7 +67,7 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   header: {
     alignItems: 'center',
-    padding: 50,
+	padding: 50,
     marginBottom: 20,
   },
   subtitle: {
