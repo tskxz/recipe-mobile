@@ -17,6 +17,11 @@ app.get('/api/recipes', (req, res) => {
     res.json(recipes)
 })
 
+app.get('/api/my_recipes', (req, res) => {
+    const recipe = recipes.filter(e => e.user === "utilizador1");
+    res.json(recipe)
+})
+
 app.get("/api/recipes/:id", (req, res) => {
     const recipe = recipes.find(e => e._id === req.params.id);
     res.json(recipe)
