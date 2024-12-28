@@ -4,6 +4,8 @@ import { HelloWave } from '@/components/HelloWave';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
+import { Link } from 'expo-router';
+
 
 export default function HomeScreen() {
   const [recipes, setRecipes] = useState([]); 
@@ -30,7 +32,16 @@ export default function HomeScreen() {
   const renderCard = ({ item }) => (
     <View style={styles.card}>
       <Image source={{ uri: item.image }} style={styles.cardImage} />
-      <Text style={styles.cardTitle}>{item.title}</Text>
+      
+      <Text style={styles.cardTitle}>
+      <Link
+        href={{
+          pathname: '/receitas/[id]',
+          params: { id: item._id },
+        }}>
+        {item.title}
+        </Link>
+        </Text>
     </View>
   );
 
