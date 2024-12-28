@@ -37,7 +37,7 @@ export default function HomeScreen() {
   const renderHeader = () => (
     <ThemedView style={styles.header}>
       
-      <ThemedText type="title">Receitas Teste</ThemedText>
+      <ThemedText type="title">Receitas</ThemedText>
       <HelloWave />
       <Text style={styles.subtitle}>
         Ve e pesquisa todas as receitas!
