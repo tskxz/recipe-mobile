@@ -7,25 +7,44 @@ import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { IconSymbol } from '@/components/ui/IconSymbol';
 import { HelloWave } from '@/components/HelloWave';
-
-const minhas_receitas = [
-  {
-    id: '2',
-    title: 'Salada Fresca',
-    image: 'https://cdn.recipes.lidl/images/pt-PT/Salada-fresca-de-verao.jpg',
-  },
-  {
-    id: '3',
-    title: 'Sopa de Legumes',
-    image: 'https://assets.unileversolutions.com/recipes-v2/36850.jpg',
-  },
-];
+import React, {useEffect, useState} from 'react';
+import { Link } from 'expo-router';
 
 export default function MinhasReceitasScreen() {
+  const [recipes, setRecipes] = useState([]); 
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchRecipes = async () => {
+      try {
+        const API_URL = "http://192.168.1.135:3000/api/my_recipes"
+        const response = await fetch(API_URL);
+        const data = await response.json();
+        console.log('Receitas carregadas: ', data)
+        setRecipes(data);
+        
+      } catch (error) {
+        console.error('Erro ao buscar receitas:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+  
+    fetchRecipes();
+  }, []);  
+
   const renderCard = ({ item }) => (
     <View style={styles.card}>
       <Image source={{ uri: item.image }} style={styles.cardImage} />
-      <Text style={styles.cardTitle}>{item.title}</Text>
+      <Text style={styles.cardTitle}>
+      <Link
+        href={{
+          pathname: '/receitas/[id]',
+          params: { id: item._id },
+        }}>
+        {item.title}
+        </Link>
+        </Text>
     </View>
   );
 
@@ -42,7 +61,7 @@ export default function MinhasReceitasScreen() {
 
   return (
     <FlatList
-      data={minhas_receitas}
+      data={recipes}
       keyExtractor={(item) => item.id}
       renderItem={renderCard}
       ListHeaderComponent={renderHeader}
