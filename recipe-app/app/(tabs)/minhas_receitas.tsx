@@ -8,6 +8,7 @@ import { ThemedView } from '@/components/ThemedView';
 import { IconSymbol } from '@/components/ui/IconSymbol';
 import { HelloWave } from '@/components/HelloWave';
 import React, {useEffect, useState} from 'react';
+import { Link } from 'expo-router';
 
 export default function MinhasReceitasScreen() {
   const [recipes, setRecipes] = useState([]); 
@@ -35,7 +36,15 @@ export default function MinhasReceitasScreen() {
   const renderCard = ({ item }) => (
     <View style={styles.card}>
       <Image source={{ uri: item.image }} style={styles.cardImage} />
-      <Text style={styles.cardTitle}>{item.title}</Text>
+      <Text style={styles.cardTitle}>
+      <Link
+        href={{
+          pathname: '/receitas/[id]',
+          params: { id: item._id },
+        }}>
+        {item.title}
+        </Link>
+        </Text>
     </View>
   );
 
