@@ -36,6 +36,7 @@ export default function TabLayout() {
         name="minhas_receitas"
         options={{
           title: 'Minhas Receitas',
+          href: null,
           tabBarIcon: ({ color }) => <IconSymbol size={28} name="food-bank" color={color} />,
         }}
       />
