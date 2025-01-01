@@ -54,8 +54,8 @@ app.post("/api/recipes/publish", async (req, res) => {
     res.json(recipeCriado)
 })
 
-app.get("/api/recipes/:id", (req, res) => {
-    const recipe = recipes.find(e => e._id === req.params.id);
+app.get("/api/recipes/:id", async (req, res) => {
+    const recipe = await Receita.findById(req.params.id)
     res.json(recipe)
 })
 
