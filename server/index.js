@@ -20,7 +20,8 @@ app.get('/', (req, res) =>{
     res.send('API a rodar!')
 })
 
-app.get('/api/recipes', (req, res) => {
+app.get('/api/recipes', async (req, res) => {
+    const recipes = await Receita.find({})
     res.json(recipes)
 })
 
