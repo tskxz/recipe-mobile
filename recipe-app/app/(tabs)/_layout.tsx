@@ -37,14 +37,14 @@ export default function TabLayout() {
         name="minhas_receitas"
         options={{
           title: 'Minhas Receitas',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
+          tabBarIcon: ({ color }) => <IconSymbol size={28} name="food-bank" color={color} />,
         }}
       />
       <Tabs.Screen
-        name="explore"
+        name="criar_receitas"
         options={{
-          title: 'Explore',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
+          title: 'Criar Receita',
+          tabBarIcon: ({ color }) => <IconSymbol size={28} name="post-add" color={color} />,
         }}
       />
     </Tabs>
