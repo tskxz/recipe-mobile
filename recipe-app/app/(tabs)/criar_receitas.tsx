@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { ThemedText } from '@/components/ThemedText';
+import axios from 'axios';
 
 export default function TabTwoScreen() {
   const colorScheme = useColorScheme();
@@ -29,7 +30,7 @@ export default function TabTwoScreen() {
     setSteps([...steps, { order: steps.length + 1, description: '' }]);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const recipe = {
       name,
       description,
@@ -42,6 +43,20 @@ export default function TabTwoScreen() {
 
     console.log('Recipe submitted:', recipe);
     // API call
+    try {
+      const response = await axios.post("http://192.168.1.135:3000/api/recipes/publish", recipe, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+  
+      console.log("Recipe submitted successfully:", response.data);
+      alert("Receita enviada com sucesso!");
+    } catch (error) {
+      console.error("Erro ao enviar receita:", error);
+      alert("Houve um erro ao enviar a receita. Tente novamente.");
+    }
+
   };
 
   return (
