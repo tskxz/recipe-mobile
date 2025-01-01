@@ -15,17 +15,16 @@ export default function TabLayout() {
     <Tabs
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-        headerShown: false,
         tabBarButton: HapticTab,
         tabBarBackground: TabBarBackground,
         tabBarStyle: Platform.select({
           ios: {
-            // Use a transparent background on iOS to show the blur effect
-            position: 'absolute',
+            position: 'absolute', // Use a transparent background on iOS to show the blur effect
           },
           default: {},
         }),
-      }}>
+      }}
+    >
       <Tabs.Screen
         name="index"
         options={{
@@ -37,6 +36,7 @@ export default function TabLayout() {
         name="minhas_receitas"
         options={{
           title: 'Minhas Receitas',
+          href: null,
           tabBarIcon: ({ color }) => <IconSymbol size={28} name="food-bank" color={color} />,
         }}
       />
@@ -47,6 +47,15 @@ export default function TabLayout() {
           tabBarIcon: ({ color }) => <IconSymbol size={28} name="post-add" color={color} />,
         }}
       />
+     <Tabs.Screen
+        name="receitas/[id]"
+        options={{
+          title: 'Receita',
+          href: null,
+          tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
+        }}
+      />
     </Tabs>
+    
   );
 }

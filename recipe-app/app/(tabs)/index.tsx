@@ -39,7 +39,7 @@ export default function HomeScreen() {
           pathname: '/receitas/[id]',
           params: { id: item._id },
         }}>
-        {item.title}
+        {item.name}
         </Link>
         </Text>
     </View>

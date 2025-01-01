@@ -3,22 +3,22 @@ import mongoose from 'mongoose';
 const IngredientSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: true,
+    required: false,
   },
   quantity: {
     type: String,
-    required: true,
+    required: false,
   },
 });
 
 const StepSchema = new mongoose.Schema({
   order: {
     type: Number,
-    required: true,
+    required: false,
   },
   description: {
     type: String,
-    required: true,
+    required: false,
   },
 });
 
@@ -64,11 +64,11 @@ const ReceitaSchema = new mongoose.Schema({
   },*/
   ingredients: {
     type: [IngredientSchema],
-    required: true,
+    required: false,
   },
   steps: {
     type: [StepSchema],
-    required: true,
+    required: false,
   },
 }, {
   timestamps: true,
