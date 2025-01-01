@@ -52,6 +52,10 @@ const ReceitaSchema = new mongoose.Schema({
     enum: ['public', 'private'],
     default: 'public', // TODO: meter privado no fim de desenvolvimen
   },
+  image: {
+    type: String,
+    required: false,
+  },
   /*
   user_id: {
     type: mongoose.Schema.Types.ObjectId,
