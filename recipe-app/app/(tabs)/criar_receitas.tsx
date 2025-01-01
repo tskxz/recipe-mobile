@@ -9,10 +9,12 @@ import {
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { ThemedText } from '@/components/ThemedText';
 import axios from 'axios';
+import { useRouter } from 'expo-router';
 
 export default function TabTwoScreen() {
   const colorScheme = useColorScheme();
   const isDarkMode = colorScheme === 'dark';
+  const router = useRouter();
 
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
@@ -52,6 +54,9 @@ export default function TabTwoScreen() {
   
       console.log("Recipe submitted successfully:", response.data);
       alert("Receita enviada com sucesso!");
+      const recipeId = response.data._id;
+      router.push(`/receitas/${recipeId}`);
+      
     } catch (error) {
       console.error("Erro ao enviar receita:", error);
       alert("Houve um erro ao enviar a receita. Tente novamente.");
