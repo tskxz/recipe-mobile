@@ -55,6 +55,14 @@ export default function TabLayout() {
           tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
         }}
       />
+      <Tabs.Screen
+        name="receitas/edit/[id]"
+        options={{
+          title: 'Editar Receita',
+          href: null,
+          tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
+        }}
+      />
     </Tabs>
     
   );
