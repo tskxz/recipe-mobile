@@ -1,4 +1,4 @@
-import { useLocalSearchParams, useRouter } from 'expo-router';
+import { useLocalSearchParams, useRouter, Link } from 'expo-router';
 import React, { useEffect, useState } from 'react';
 import { View, Text, Image, StyleSheet, FlatList, ActivityIndicator } from 'react-native';
 import { Ionicons } from '@expo/vector-icons'; // Importar o ícone da seta
@@ -91,6 +91,19 @@ export default function RecipeDetailsScreen() {
           </Text>
         )}
       />
+      <Text style={[styles.description, { color: colorScheme === 'dark' ? '#aaa' : '#666' }]}>
+      <Link
+        href={{
+          pathname: '/receitas/edit/[id]',
+          params: { id: recipe._id },
+        }}>
+        Editar
+        </Link>
+      </Text>
+
+
+      
+
     </View>
   );
 }
