@@ -5,11 +5,15 @@ import {
   Button,
   ScrollView,
   View,
+  Image,
+  TouchableOpacity,
 } from 'react-native';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { ThemedText } from '@/components/ThemedText';
 import axios from 'axios';
 import { useRouter, useLocalSearchParams } from 'expo-router';
+import * as ImagePicker from 'expo-image-picker';
+
 
 export default function TabTwoScreen() {
   const colorScheme = useColorScheme();
@@ -25,6 +29,8 @@ export default function TabTwoScreen() {
   const [numPeople, setNumPeople] = useState('');
   const [ingredients, setIngredients] = useState([{ name: '', quantity: '' }]);
   const [steps, setSteps] = useState([{ order: 1, description: '' }]);
+  const [image, setImage] = useState('');
+
 
   useEffect(() => {
     const fetchRecipe = async () => {
@@ -33,7 +39,16 @@ export default function TabTwoScreen() {
         const response = await fetch(API_URL);
         const data = await response.json();
         console.log('Receita carregada:', data);
-        setRecipe(data);
+        // Preencher os campos com os dados da receita
+        setName(data.name);
+        setDescription(data.description);
+        setTime(data.time);
+        setDifficulty(data.difficulty);
+        setNumPeople(data.num_people.toString());
+        setIngredients(data.ingredients.map(({ name, quantity }) => ({ name, quantity })));
+        setSteps(data.steps.map(({ order, description }) => ({ order, description })));
+        setImage(data.image || '');
+
       } catch (error) {
         console.error('Erro ao carregar a receita:', error);
       } finally {
@@ -43,6 +58,20 @@ export default function TabTwoScreen() {
 
     fetchRecipe();
   }, [id]);
+
+  const handleImagePick = async () => {
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    if (!result.canceled) {
+      console.log('Imagem selecionada:', result.assets[0].uri);
+      setImage(result.assets[0].uri);
+    }
+  };
 
   const handleAddIngredient = () => {
     setIngredients([...ingredients, { name: '', quantity: '' }]);
@@ -61,6 +90,7 @@ export default function TabTwoScreen() {
       num_people: numPeople,
       ingredients,
       steps,
+      image,
     };
 
     console.log('Recipe submitted:', recipe);
@@ -160,6 +190,7 @@ export default function TabTwoScreen() {
           />
         </View>
       ))}
+      
       <Button title="Adicionar Ingrediente" onPress={handleAddIngredient} />
 
       <ThemedText type="subtitle" style={styles.subtitle}>
@@ -180,6 +211,10 @@ export default function TabTwoScreen() {
         />
       ))}
       <Button title="Adicionar Passo" onPress={handleAddStep} />
+      <View style={styles.imageContainer}>
+        {image && <Image source={{ uri: image }} style={styles.imagePreview} />}
+        <Button title="Selecionar Imagem" onPress={handleImagePick} />
+      </View>
       <Button title="Salvar Receita" onPress={handleSubmit} color={isDarkMode ? '#007BFF' : '#0056B3'} />
     </ScrollView>
   );
@@ -231,4 +266,6 @@ const styles = StyleSheet.create({
   quantityInput: {
     flex: 1,
   },
+  imageContainer: { alignItems: 'center', marginVertical: 16 },
+  imagePreview: { width: 200, height: 200, borderRadius: 8 },
 });
