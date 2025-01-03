@@ -5,11 +5,14 @@ import {
   Button,
   ScrollView,
   View,
+  Image,
 } from 'react-native';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { ThemedText } from '@/components/ThemedText';
 import axios from 'axios';
 import { useRouter } from 'expo-router';
+import * as ImagePicker from 'expo-image-picker';
+
 
 export default function TabTwoScreen() {
   const colorScheme = useColorScheme();
@@ -19,10 +22,30 @@ export default function TabTwoScreen() {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [time, setTime] = useState('');
+  const [image, setImage] = useState(null);
   const [difficulty, setDifficulty] = useState('');
   const [numPeople, setNumPeople] = useState('');
   const [ingredients, setIngredients] = useState([{ name: '', quantity: '' }]);
   const [steps, setSteps] = useState([{ order: 1, description: '' }]);
+
+  const handlePickImage = async () => {
+    const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    if (!permissionResult.granted) {
+      alert('Permissão para acessar a galeria é necessária!');
+      return;
+    }
+  
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+  
+    if (!result.canceled) {
+      setImage(result.assets[0].uri); // Armazena o URI da imagem
+    }
+  };
 
   const handleAddIngredient = () => {
     setIngredients([...ingredients, { name: '', quantity: '' }]);
@@ -41,6 +64,7 @@ export default function TabTwoScreen() {
       num_people: numPeople,
       ingredients,
       steps,
+      image
     };
 
     console.log('Recipe submitted:', recipe);
@@ -138,6 +162,7 @@ export default function TabTwoScreen() {
             }}
             placeholderTextColor={isDarkMode ? '#aaa' : '#666'}
           />
+          
         </View>
       ))}
       <Button title="Adicionar Ingrediente" onPress={handleAddIngredient} />
@@ -160,6 +185,11 @@ export default function TabTwoScreen() {
         />
       ))}
       <Button title="Adicionar Passo" onPress={handleAddStep} />
+      
+      <View style={styles.imageContainer}>
+        {image && <Image source={{ uri: image }} style={styles.imagePreview} />}
+        <Button title="Selecionar Imagem" onPress={handlePickImage} />
+      </View>
       <Button title="Salvar Receita" onPress={handleSubmit} color={isDarkMode ? '#007BFF' : '#0056B3'} />
     </ScrollView>
   );
@@ -211,4 +241,6 @@ const styles = StyleSheet.create({
   quantityInput: {
     flex: 1,
   },
+  imageContainer: { alignItems: 'center', marginVertical: 16 },
+  imagePreview: { width: 200, height: 200, borderRadius: 8 },
 });
