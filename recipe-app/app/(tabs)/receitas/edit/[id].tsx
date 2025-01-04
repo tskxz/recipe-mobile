@@ -215,7 +215,7 @@ export default function TabTwoScreen() {
         {image && <Image source={{ uri: image }} style={styles.imagePreview} />}
         <Button title="Selecionar Imagem" onPress={handleImagePick} />
       </View>
-      <Button title="Salvar Receita" onPress={handleSubmit} color={isDarkMode ? '#007BFF' : '#0056B3'} />
+      <Button title="Editar Receita" onPress={handleSubmit} color={isDarkMode ? '#007BFF' : '#0056B3'} />
     </ScrollView>
   );
 }
