@@ -1,9 +1,10 @@
 import { useLocalSearchParams, useRouter, Link } from 'expo-router';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback} from 'react';
 import { View, Text, Image, StyleSheet, FlatList, ActivityIndicator } from 'react-native';
 import { Ionicons } from '@expo/vector-icons'; // Importar o ícone da seta
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useColorScheme } from 'react-native'; // Hook para detectar o tema
+import { useFocusEffect } from '@react-navigation/native';
 
 export default function RecipeDetailsScreen() {
   const { id } = useLocalSearchParams();
@@ -12,9 +13,10 @@ export default function RecipeDetailsScreen() {
   const router = useRouter(); // Usar o hook de roteamento
   const colorScheme = useColorScheme(); // Detecção de tema
 
-  useEffect(() => {
+
     const fetchRecipe = async () => {
       try {
+        setLoading(true);
         const API_URL = `http://192.168.1.135:3000/api/recipes/${id}`;
         const response = await fetch(API_URL);
         const data = await response.json();
@@ -27,8 +29,13 @@ export default function RecipeDetailsScreen() {
       }
     };
 
-    fetchRecipe();
-  }, [id]);
+    useFocusEffect(
+      useCallback(() => {
+        fetchRecipe();
+      }, [id])
+    );
+  
+
 
   if (loading) {
     return (

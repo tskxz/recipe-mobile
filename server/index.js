@@ -38,7 +38,8 @@ app.post("/api/recipes/publish", async (req, res) => {
         difficulty, 
         num_people, 
         ingredients, 
-        steps
+        steps,
+        image,
     } = req.body
 
     const newRecipe = new Receita({
@@ -49,6 +50,7 @@ app.post("/api/recipes/publish", async (req, res) => {
         num_people, 
         ingredients, 
         steps,
+        image,
     })
 
     const recipeCriado = await newRecipe.save()
@@ -60,6 +62,34 @@ app.get("/api/recipes/:id", async (req, res) => {
     res.json(recipe)
 })
 
+app.put("/api/recipes/:id", async (req, res) => {
+    const recipe = await Receita.findById(req.params.id)
+    if(recipe){
+       recipe.name = req.body.name || recipe.name
+       recipe.description = req.body.description || recipe.description
+       recipe.time = req.body.time || recipe.time
+       recipe.difficulty = req.body.difficulty || recipe.difficulty
+       recipe.num_people = req.body.num_people || recipe.num_people
+       recipe.ingredients = req.body.ingredients || recipe.ingredients
+       recipe.steps = req.body.steps || recipe.steps
+       recipe.image = req.body.image || recipe.imagem
+       const recipeUpdated = await recipe.save()
+       res.status(200).json({
+        _id: recipeUpdated._id,
+        name: recipeUpdated.name,
+        description: recipeUpdated.description,
+        time: recipeUpdated.time,
+        difficulty: recipeUpdated.difficulty,
+        num_people: recipeUpdated.num_people,
+        ingredients: recipeUpdated.ingredients,
+        steps: recipeUpdated.steps,
+        image: recipeUpdated.image,
+       })
+    } else {
+        res.status(404).json({message: "Receita não encontrada"})
+    }
+    
+})
 
 app.listen(port, () => {
     console.log(`servidor a rodar na porta ${port}`);
