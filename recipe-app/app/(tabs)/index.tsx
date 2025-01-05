@@ -1,62 +1,92 @@
 import { StyleSheet, View, Text, Image, FlatList } from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState, useCallback, useRef } from 'react';
 import { HelloWave } from '@/components/HelloWave';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { Link } from 'expo-router';
+import { SearchBar } from '@rneui/themed';
+import { debounce } from 'lodash';
 
+// Move renderHeader outside HomeScreen
+const RenderHeader = ({ search, updateSearch }) => {
+  const searchBarRef = useRef(null);
+
+  return (
+    <ThemedView style={styles.header}>
+      <ThemedText type="title">Receitas</ThemedText>
+      <HelloWave />
+      <Text style={styles.subtitle}>
+        Veja e pesquise todas as receitas!
+      </Text>
+      <SearchBar
+        ref={searchBarRef} // Attach ref to SearchBar
+        placeholder="Type Here..."
+        onChangeText={updateSearch}
+        value={search}
+        // Prevent losing focus by setting focus after every render
+        onFocus={() => searchBarRef.current?.focus()}
+      />
+    </ThemedView>
+  );
+};
 
 export default function HomeScreen() {
   const [recipes, setRecipes] = useState([]); 
   const [loading, setLoading] = useState(true);
-  
+  const [filteredRecipes, setFilteredRecipes] = useState([]); 
+  const [search, setSearch] = useState("");
+
+  // Create a ref for the SearchBar
+  const searchBarRef = useRef(null);
+
+  // Use debounce with search filtering
+  const filterRecipes = useCallback(debounce((text) => {
+    const filtered = recipes.filter((recipe) =>
+      recipe.name.toLowerCase().includes(text.toLowerCase())
+    );
+    setFilteredRecipes(filtered);
+  }, 500), [recipes]);
+
+  const updateSearch = (searchText) => {
+    setSearch(searchText);
+    filterRecipes(searchText);
+  };
+
   useEffect(() => {
     const fetchRecipes = async () => {
       try {
-        const API_URL = "http://192.168.1.135:3000/api/recipes"
+        const API_URL = "http://192.168.1.135:3000/api/recipes";
         const response = await fetch(API_URL);
         const data = await response.json();
-        console.log('Receitas carregadas: ', data)
+        console.log('Receitas carregadas: ', data);
         setRecipes(data);
-        
+        setFilteredRecipes(data);
       } catch (error) {
         console.error('Erro ao buscar receitas:', error);
       } finally {
         setLoading(false);
       }
     };
-  
+
     fetchRecipes();
   }, []);
+
   const renderCard = ({ item }) => (
     <View style={styles.card}>
       <Image source={{ uri: item.image }} style={styles.cardImage} />
-      
       <Text style={styles.cardTitle}>
-      <Link
-        href={{
-          pathname: '/receitas/[id]',
-          params: { id: item._id },
-        }}>
-        {item.name}
+        <Link
+          href={{
+            pathname: '/receitas/[id]',
+            params: { id: item._id },
+          }}>
+          {item.name}
         </Link>
-        </Text>
+      </Text>
     </View>
   );
 
-  const renderHeader = () => (
-    <ThemedView style={styles.header}>
-      
-      <ThemedText type="title">Receitas</ThemedText>
-      <HelloWave />
-      <Text style={styles.subtitle}>
-        Ve e pesquisa todas as receitas!
-      </Text>
-    </ThemedView>
-  );
-
-  if(loading){
+  if (loading) {
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         <Text>Carregando receitas...</Text>
@@ -66,11 +96,12 @@ export default function HomeScreen() {
 
   return (
     <FlatList
-      data={recipes}
+      data={filteredRecipes} // Usa as receitas filtradas
       keyExtractor={(item) => item._id}
       renderItem={renderCard}
-      ListHeaderComponent={renderHeader}
+      ListHeaderComponent={<RenderHeader search={search} updateSearch={updateSearch} />}
       contentContainerStyle={styles.container}
+      keyboardShouldPersistTaps="handled" // Permite manter o foco no input
     />
   );
 }
@@ -78,7 +109,7 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   header: {
     alignItems: 'center',
-	padding: 50,
+    padding: 50,
     marginBottom: 20,
   },
   subtitle: {
