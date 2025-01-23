@@ -70,7 +70,7 @@ export default function TabTwoScreen() {
     console.log('Recipe submitted:', recipe);
     // API call
     try {
-      const response = await axios.post("http://192.168.1.135:3000/api/recipes/publish", recipe, {
+      const response = await axios.post("http://localhost:3000/api/recipes/publish", recipe, {
         headers: {
           "Content-Type": "application/json",
         },

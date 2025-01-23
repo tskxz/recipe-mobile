@@ -55,7 +55,7 @@ export default function HomeScreen() {
   useEffect(() => {
     const fetchRecipes = async () => {
       try {
-        const API_URL = "http://192.168.1.135:3000/api/recipes";
+        const API_URL = "http://localhost:3000/api/recipes";
         const response = await fetch(API_URL);
         const data = await response.json();
         console.log('Receitas carregadas: ', data);

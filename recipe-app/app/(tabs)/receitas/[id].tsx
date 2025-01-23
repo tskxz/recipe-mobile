@@ -17,7 +17,7 @@ export default function RecipeDetailsScreen() {
     const fetchRecipe = async () => {
       try {
         setLoading(true);
-        const API_URL = `http://192.168.1.135:3000/api/recipes/${id}`;
+        const API_URL = `http://localhost:3000/api/recipes/${id}`;
         const response = await fetch(API_URL);
         const data = await response.json();
         console.log('Receita carregada:', data);
