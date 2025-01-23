@@ -35,7 +35,7 @@ export default function TabTwoScreen() {
   useEffect(() => {
     const fetchRecipe = async () => {
       try {
-        const API_URL = `http://192.168.1.135:3000/api/recipes/${id}`;
+        const API_URL = `http://localhost:3000/api/recipes/${id}`;
         const response = await fetch(API_URL);
         const data = await response.json();
         console.log('Receita carregada:', data);
@@ -96,7 +96,7 @@ export default function TabTwoScreen() {
     console.log('Recipe submitted:', recipe);
     // API call
     try {
-      const response = await axios.put(`http://192.168.1.135:3000/api/recipes/${id}`, recipe, {
+      const response = await axios.put(`http://localhost:3000/api/recipes/${id}`, recipe, {
         headers: {
           "Content-Type": "application/json",
         },

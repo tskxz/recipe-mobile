@@ -6,6 +6,7 @@ import {
   ScrollView,
   View,
   Image,
+  Picker,
 } from 'react-native';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { ThemedText } from '@/components/ThemedText';
@@ -70,7 +71,7 @@ export default function TabTwoScreen() {
     console.log('Recipe submitted:', recipe);
     // API call
     try {
-      const response = await axios.post("http://192.168.1.135:3000/api/recipes/publish", recipe, {
+      const response = await axios.post("http://localhost:3000/api/recipes/publish", recipe, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -120,13 +121,19 @@ export default function TabTwoScreen() {
         onChangeText={setTime}
         placeholderTextColor={isDarkMode ? '#aaa' : '#666'}
       />
-      <TextInput
-        style={[styles.input, isDarkMode ? styles.darkInput : styles.lightInput]}
-        placeholder="Dificuldade (e.g., Fácil, Médio, Difícil)"
-        value={difficulty}
-        onChangeText={setDifficulty}
-        placeholderTextColor={isDarkMode ? '#aaa' : '#666'}
-      />
+      <Picker
+          selectedValue={difficulty}
+          onValueChange={(itemValue) => setDifficulty(itemValue)}
+          style={[
+            styles.picker,
+            isDarkMode ? styles.darkPicker : styles.lightPicker,
+          ]}
+        >
+          <Picker.Item label="Selecione a dificuldade" value="" />
+          <Picker.Item label="Fácil" value="Fácil" />
+          <Picker.Item label="Médio" value="Médio" />
+          <Picker.Item label="Difícil" value="Difícil" />
+        </Picker> <br />
       <TextInput
         style={[styles.input, isDarkMode ? styles.darkInput : styles.lightInput]}
         placeholder="Número de Pessoas"
@@ -243,4 +250,23 @@ const styles = StyleSheet.create({
   },
   imageContainer: { alignItems: 'center', marginVertical: 16 },
   imagePreview: { width: 200, height: 200, borderRadius: 8 },
+  pickerContainer: {
+    marginBottom: 16,
+  },
+  pickerLabel: {
+    marginBottom: 8,
+  },
+  picker: {
+    height: 50,
+    borderWidth: 1,
+    borderRadius: 8,
+  },
+  lightPicker: {
+    backgroundColor: '#fff',
+    color: '#000',
+  },
+  darkPicker: {
+    backgroundColor: '#333',
+    color: '#fff',
+  },
 });

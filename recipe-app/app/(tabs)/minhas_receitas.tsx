@@ -17,7 +17,7 @@ export default function MinhasReceitasScreen() {
   useEffect(() => {
     const fetchRecipes = async () => {
       try {
-        const API_URL = "http://192.168.1.135:3000/api/my_recipes"
+        const API_URL = "http://localhost:3000/api/my_recipes"
         const response = await fetch(API_URL);
         const data = await response.json();
         console.log('Receitas carregadas: ', data)
